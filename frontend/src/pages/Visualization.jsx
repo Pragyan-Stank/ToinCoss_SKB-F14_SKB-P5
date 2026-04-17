@@ -16,8 +16,34 @@ const INITIAL_VIEW_STATE = {
   bearing: 0
 };
 
-// Using a standard, vibrant light daytime CARTO basemap (similar to Google Maps)
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+// Using ESRI World Imagery pure satellite base map
+const MAP_STYLE = {
+  version: 8,
+  sources: {
+    satellite: {
+      type: "raster",
+      tiles: [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      tileSize: 256,
+      attribution: "Tiles &copy; Esri"
+    }
+  },
+  layers: [
+    {
+      id: "background",
+      type: "background",
+      paint: { "background-color": "#021019" }
+    },
+    {
+      id: "satellite-layer",
+      type: "raster",
+      source: "satellite",
+      minzoom: 0,
+      maxzoom: 19
+    }
+  ]
+};
 
 const Visualization = () => {
   const [data, setData] = useState([]);
